@@ -14,19 +14,22 @@ class NflSeason(Base):
     id = Column(Integer, primary_key=True)
     season = Column(String(4), nullable=False)
     
-class NflWeek(Base):
-    __tablename__ = 'nfl_week'
-    # Here we define columns for the table nfl weeks.
-    id = Column(Integer, primary_key = True)
-    week = Column(String(2))
+    
+class TeamLocation(Base):
+    __tablename__ = 'team_location'
+    # Here we define the city and state of every NFL orginazation
+    id = Column(Integer, primary_key= True)
+    city = Column(String(20), nullable=False)
+    state = Column(String(20), nullable=False)
+    time_zone = Column(String(3), nullable=False)
 
 class NflTeam(Base):
     __tablename__ = 'nfl_team'
     # Here we define columns for the table nfl team names.
     id = Column(Integer, primary_key = True)
-    city = Column(String(30), nullable = False)
-    state = Column(String(2), nullable = False)
     team_name = Column(String(30), nullable = False)
+    abbr = Column(String(20), nullable=False)
+    location_id = Column(Integer, ForeignKey('team_location.id'))
 
 class Position(Base):
     __tablename__ = 'position'
@@ -46,30 +49,25 @@ class PlayerStats(Base):
     __tablename__ = 'player_stats'
     # Here we define columns for the table nfl positions.
     player_id = Column(Integer, primary_key = True)
-    player_name = Column(String(50), ForeignKey('player.player_name'))
     team_id = Column(Integer, ForeignKey('nfl_team.id'))
+    opponent_id = Column(Integer, ForeignKey('nfl_team.id'))
     season_id = Column(Integer, ForeignKey('nfl_season.id'))
-    week_id = Column(Integer, ForeignKey('nfl_week.id'))
+    week= Column(Integer)
     position_id = Column(String(3), ForeignKey('position.id'))
-    ffpts = Column(Float)
-    patt = Column(Float)
-    pcomp = Column(Float)
-    pyds = Column(Float)
-    ptds = Column(Integer)
-    pint = Column(Integer)
-    p2 = Column(Integer)
+    rank = Column(Integer)
+    player_name = Column(String(50), ForeignKey('player.player_name'))
+    comp = Column(Float)
+    att = Column(Float)
+    yds = Column(Float)
+    tds = Column(Integer)
+    picks = Column(Integer)
     ruatt = Column(Float)
     ruyds = Column(Float)
     rutds = Column(Integer)
-    ru2 = Column(Integer)
-    ruatt = Column(Integer)
-    ruyds = Column(Float)
-    rutds = Column(Integer)
-    ru2 = Column(Integer)
+    targets = Column(Integer)
     rec = Column(Integer)
     recyds = Column(Float)
     rectds = Column(Integer)
-    rec2 = Column(Integer)
     
     
     
